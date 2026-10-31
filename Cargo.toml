@@ -5,6 +5,9 @@ edition = "2024"
 description = "Personal portfolio built with Rust and Dioxus"
 license = "MIT"
 
+[package.metadata.dioxus-vercel]
+project = "nylla"
+
 [dependencies]
 dioxus = { version = "=0.7.10" }
 lucide-dioxus = { version = "3.63", features = ["all-icons"] }
