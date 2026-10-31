@@ -487,16 +487,19 @@ async fn fetch_stat(value: StatValue) -> Option<u64> {
                 "#
             ),
         ),
-        StatValue::PageViewsYear => cached_stat_js(
-            "page-views-year",
-            &format!(
-                r#"
-                const r = await fetch({url});
-                if (!r.ok) return null;
-                return (await r.json()).views;
-                "#,
-                url = crate::js::js_str(&format!("{}/views?site={}&days=365", PAGE_VIEWS.endpoint, PAGE_VIEWS.site)),
-            ),
+        // Not cached like the others: viewtally has no rate limit to protect,
+        // and a cached total could miss this visit or go backwards on reload.
+        StatValue::PageViewsYear => format!(
+            r#"
+            // Read the total after this visit's hit lands, so it's included,
+            // with a unique URL so neither the browser nor the Worker's cache answers.
+            await {hit};
+            const r = await fetch({url} + "&fresh=" + Date.now());
+            if (!r.ok) return null;
+            return (await r.json()).views;
+            "#,
+            hit = page_view_hit_js(),
+            url = crate::js::js_str(&format!("{}/views?site={}&days=365", PAGE_VIEWS.endpoint, PAGE_VIEWS.site)),
         ),
     };
     crate::js::eval::<Option<u64>>(&code).await.flatten()
@@ -505,28 +508,36 @@ async fn fetch_stat(value: StatValue) -> Option<u64> {
 /// Reports this visit to the page-view counter, at most once a day per
 /// browser. The counter itself also skips repeat visitors and bots.
 pub async fn count_page_view() {
-    let code = format!(
-        r#"
-        if (navigator.webdriver) return true;
-        const site = {site};
-        const key = "viewtally:" + site + ":" + location.pathname;
-        const today = new Date().toISOString().slice(0, 10);
-        try {{
-            if (localStorage.getItem(key) === today) return true;
-            localStorage.setItem(key, today);
-        }} catch {{}}
-        // No Content-Type header, so the browser sends it without a CORS preflight.
-        fetch({endpoint} + "/hit", {{
-            method: "POST",
-            body: JSON.stringify({{ site, path: location.pathname }}),
-            keepalive: true,
-        }}).catch(() => {{}});
-        return true;
-        "#,
+    let code = format!("await {}; return true;", page_view_hit_js());
+    let _ = crate::js::eval::<bool>(&code).await;
+}
+
+/// A JS expression that sends this visit's hit, if it hasn't been sent today,
+/// and gives a promise of the counter's reply (or null). The promise is kept on
+/// `window`, so the hit goes out once however many places ask for it.
+fn page_view_hit_js() -> String {
+    format!(
+        r#"(window.viewtallyHit ??= (() => {{
+            if (navigator.webdriver) return Promise.resolve(null);
+            const site = {site};
+            const key = "viewtally:" + site + ":" + location.pathname;
+            const today = new Date().toISOString().slice(0, 10);
+            try {{
+                if (localStorage.getItem(key) === today) return Promise.resolve(null);
+                localStorage.setItem(key, today);
+            }} catch {{}}
+            // No Content-Type header, so the browser sends it without a CORS preflight.
+            return fetch({endpoint} + "/hit", {{
+                method: "POST",
+                body: JSON.stringify({{ site, path: location.pathname }}),
+                keepalive: true,
+            }})
+                .then((r) => (r.ok ? r.json() : null))
+                .catch(() => null);
+        }})())"#,
         site = crate::js::js_str(PAGE_VIEWS.site),
         endpoint = crate::js::js_str(PAGE_VIEWS.endpoint),
-    );
-    let _ = crate::js::eval::<bool>(&code).await;
+    )
 }
 
 /// Shows a dash while loading or if the source can't be reached.
