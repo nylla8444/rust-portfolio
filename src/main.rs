@@ -5,6 +5,7 @@
 
 mod data;
 mod js;
+mod mark;
 mod ui;
 
 use dioxus::prelude::*;
