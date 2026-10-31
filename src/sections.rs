@@ -420,12 +420,88 @@ pub fn Numbers() -> Element {
                             "{stat.label}"
                         }
                         dd { class: "text-sm/4 font-medium tabular-nums",
-                            data { value: "{stat.value}", title: "{format_number(stat.value)}", "{format_compact(stat.value)}" }
+                            StatNumber { value: stat.value }
                         }
                     }
                 }
             }
         }
+    }
+}
+
+/// Wraps a stat's fetch in a one-hour localStorage cache, so repeat visits
+/// don't spend GitHub's 60-requests-an-hour allowance.
+fn cached_stat_js(key: &str, body: &str) -> String {
+    format!(
+        r#"
+        const key = "stat:{key}";
+        try {{
+            const hit = JSON.parse(localStorage.getItem(key));
+            if (hit && Date.now() - hit.t < 3600000) return hit.v;
+        }} catch {{}}
+        const value = await (async () => {{ {body} }})();
+        if (value !== null) {{
+            try {{ localStorage.setItem(key, JSON.stringify({{ t: Date.now(), v: value }})); }} catch {{}}
+        }}
+        return value;
+        "#
+    )
+}
+
+async fn fetch_stat(value: StatValue) -> Option<u64> {
+    let user = USER.github_username;
+    let code = match value {
+        StatValue::Fixed(n) => return Some(n),
+        StatValue::GitHubStars => cached_stat_js(
+            "github-stars",
+            &format!(
+                r#"
+                let total = 0;
+                for (let page = 1; page <= 10; page++) {{
+                    const r = await fetch(`https://api.github.com/users/{user}/repos?type=owner&per_page=100&page=${{page}}`);
+                    if (!r.ok) return null;
+                    const repos = await r.json();
+                    for (const repo of repos) if (!repo.fork) total += repo.stargazers_count;
+                    if (repos.length < 100) break;
+                }}
+                return total;
+                "#
+            ),
+        ),
+        StatValue::CratesDownloads => cached_stat_js(
+            "crates-downloads",
+            &format!(
+                r#"
+                const u = await fetch("https://crates.io/api/v1/users/{user}");
+                if (!u.ok) return null;
+                const id = (await u.json()).user.id;
+                let total = 0;
+                for (let page = 1; page <= 10; page++) {{
+                    const r = await fetch(`https://crates.io/api/v1/crates?user_id=${{id}}&per_page=100&page=${{page}}`);
+                    if (!r.ok) return null;
+                    const {{ crates }} = await r.json();
+                    for (const c of crates) total += c.downloads;
+                    if (crates.length < 100) break;
+                }}
+                return total;
+                "#
+            ),
+        ),
+    };
+    crate::js::eval::<Option<u64>>(&code).await.flatten()
+}
+
+/// Shows a dash while loading or if the source can't be reached.
+#[component]
+fn StatNumber(value: StatValue) -> Element {
+    let number = use_resource(move || fetch_stat(value));
+    match *number.read() {
+        Some(Some(n)) => rsx! {
+            data { value: "{n}", title: "{format_number(n)}", "{format_compact(n)}" }
+        },
+        _ => rsx! {
+            span { class: "text-muted-foreground", "—" }
+        },
     }
 }
 

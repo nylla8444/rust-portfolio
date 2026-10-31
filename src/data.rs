@@ -110,14 +110,26 @@ pub const SOCIAL_LINKS: &[SocialLink] = &[
 #[derive(PartialEq)]
 pub struct Stat {
     pub label: &'static str,
-    pub value: u64,
+    pub value: StatValue,
+}
+
+#[derive(Clone, Copy, PartialEq)]
+pub enum StatValue {
+    /// Typed in by hand.
+    Fixed(u64),
+    /// Stars across every public repo you own, forks excluded, fetched live.
+    GitHubStars,
+    /// All-time downloads across every crate you own on crates.io, fetched live.
+    CratesDownloads,
 }
 
 pub const NUMBERS: &[Stat] = &[
-    Stat { label: "GitHub stars", value: 0 },
-    Stat { label: "X followers", value: 0 },
-    Stat { label: "crates.io downloads / year", value: 0 },
-    Stat { label: "Page views / year", value: 0 },
+    Stat { label: "GitHub stars", value: StatValue::GitHubStars },
+    // The X API is paid, so update this by hand every few weeks.
+    Stat { label: "X followers", value: StatValue::Fixed(0) },
+    Stat { label: "crates.io downloads", value: StatValue::CratesDownloads },
+    // Placeholder until analytics (e.g. Simple Analytics) is set up.
+    Stat { label: "Page views / year", value: StatValue::Fixed(0) },
 ];
 
 #[derive(PartialEq)]
