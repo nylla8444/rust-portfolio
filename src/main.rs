@@ -8,6 +8,7 @@ mod footer;
 mod header;
 mod js;
 mod mark;
+mod oneko;
 mod profile;
 mod sections;
 mod ui;
@@ -84,6 +85,7 @@ fn App() -> Element {
             SiteBottomNav {}
             ScrollToTop {}
             CommandMenu {}
+            oneko::Oneko {}
         }
     }
 }
