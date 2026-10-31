@@ -8,12 +8,14 @@ mod header;
 mod js;
 mod mark;
 mod profile;
+mod sections;
 mod ui;
 
 use dioxus::prelude::*;
 
 use header::{CommandMenu, CommandMenuOpen, ScrollToTop, SiteBottomNav, SiteHeader};
 use profile::{FrameWidthDimension, ProfileHeader, SeparatorHeightDimension};
+use sections::*;
 use ui::Separator;
 
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
@@ -38,6 +40,39 @@ fn App() -> Element {
                         Separator {
                             SeparatorHeightDimension { height: 32, class: "hidden lg:block" }
                         }
+
+                        Overview {}
+                        SocialLinks {}
+                        GitHubContributions {}
+                        Separator {}
+
+                        Hello {}
+                        Numbers {}
+                        Testimonials {}
+                        Separator {}
+
+                        Components {}
+                        Separator {}
+
+                        Blocks {}
+                        Separator {}
+
+                        Blog {}
+                        Separator {}
+
+                        TechStack {}
+                        Separator {}
+
+                        Experiences {}
+                        Separator {}
+
+                        EducationPanel {}
+                        Separator {}
+
+                        Projects {}
+                        Separator {}
+
+                        RecognitionPanel {}
                     }
                 }
             }
