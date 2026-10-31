@@ -29,6 +29,7 @@ fn main() {
 #[component]
 fn App() -> Element {
     use_context_provider(|| CommandMenuOpen(Signal::new(false)));
+    use_hook(|| spawn(count_page_view()));
 
     rsx! {
         document::Stylesheet { href: TAILWIND_CSS }

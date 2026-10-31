@@ -121,15 +121,30 @@ pub enum StatValue {
     GitHubStars,
     /// All-time downloads across every crate you own on crates.io, fetched live.
     CratesDownloads,
+    /// Views of this site over the last 365 days, from the counter in `PAGE_VIEWS`.
+    PageViewsYear,
 }
+
+/// Your viewtally page-view counter (https://github.com/nylla8444/viewtally-rust):
+/// the Worker's URL and the site id this page is counted under. The Worker only
+/// counts views from the origins it lists for that site, so `dx serve` on
+/// localhost can read the total without adding to it.
+pub struct PageViews {
+    pub endpoint: &'static str,
+    pub site: &'static str,
+}
+
+pub const PAGE_VIEWS: PageViews = PageViews {
+    endpoint: "https://viewtally.nylla.workers.dev",
+    site: "portfolio",
+};
 
 pub const NUMBERS: &[Stat] = &[
     Stat { label: "GitHub stars", value: StatValue::GitHubStars },
     // The X API is paid, so update this by hand every few weeks.
     Stat { label: "X followers", value: StatValue::Fixed(0) },
     Stat { label: "crates.io downloads", value: StatValue::CratesDownloads },
-    // Placeholder until analytics (e.g. Simple Analytics) is set up.
-    Stat { label: "Page views / year", value: StatValue::Fixed(0) },
+    Stat { label: "Page views / year", value: StatValue::PageViewsYear },
 ];
 
 #[derive(PartialEq)]

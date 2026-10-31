@@ -487,8 +487,46 @@ async fn fetch_stat(value: StatValue) -> Option<u64> {
                 "#
             ),
         ),
+        StatValue::PageViewsYear => cached_stat_js(
+            "page-views-year",
+            &format!(
+                r#"
+                const r = await fetch({url});
+                if (!r.ok) return null;
+                return (await r.json()).views;
+                "#,
+                url = crate::js::js_str(&format!("{}/views?site={}&days=365", PAGE_VIEWS.endpoint, PAGE_VIEWS.site)),
+            ),
+        ),
     };
     crate::js::eval::<Option<u64>>(&code).await.flatten()
+}
+
+/// Reports this visit to the page-view counter, at most once a day per
+/// browser. The counter itself also skips repeat visitors and bots.
+pub async fn count_page_view() {
+    let code = format!(
+        r#"
+        if (navigator.webdriver) return true;
+        const site = {site};
+        const key = "viewtally:" + site + ":" + location.pathname;
+        const today = new Date().toISOString().slice(0, 10);
+        try {{
+            if (localStorage.getItem(key) === today) return true;
+            localStorage.setItem(key, today);
+        }} catch {{}}
+        // No Content-Type header, so the browser sends it without a CORS preflight.
+        fetch({endpoint} + "/hit", {{
+            method: "POST",
+            body: JSON.stringify({{ site, path: location.pathname }}),
+            keepalive: true,
+        }}).catch(() => {{}});
+        return true;
+        "#,
+        site = crate::js::js_str(PAGE_VIEWS.site),
+        endpoint = crate::js::js_str(PAGE_VIEWS.endpoint),
+    );
+    let _ = crate::js::eval::<bool>(&code).await;
 }
 
 /// Shows a dash while loading or if the source can't be reached.
