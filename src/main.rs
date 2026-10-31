@@ -3,6 +3,10 @@
 //! Layout and visual design ported from chanhdai.com by Chánh Đại (MIT).
 //! The cursor-chasing cat is a Rust port of oneko.js by adryd (MIT).
 
+mod data;
+mod js;
+mod ui;
+
 use dioxus::prelude::*;
 
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
