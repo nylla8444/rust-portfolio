@@ -539,6 +539,7 @@ pub fn Testimonials() -> Element {
 // ---------------------------------------------------------------------------
 // Components, blocks and blog
 
+#[allow(dead_code)] // Commented out in main.rs until there's work to list.
 #[component]
 pub fn Components() -> Element {
     rsx! {
@@ -630,6 +631,7 @@ fn CardGrid(cards: &'static [Card], kind: &'static str) -> Element {
     }
 }
 
+#[allow(dead_code)] // Commented out in main.rs until there's work to list.
 #[component]
 pub fn Blocks() -> Element {
     rsx! {

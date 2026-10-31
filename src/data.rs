@@ -63,8 +63,9 @@ pub struct NavItem {
 }
 
 pub const MAIN_NAV: &[NavItem] = &[
-    NavItem { title: "Components", href: "#components" },
-    NavItem { title: "Blocks", href: "#blocks" },
+    // Hidden along with their sections until there's work to list.
+    // NavItem { title: "Components", href: "#components" },
+    // NavItem { title: "Blocks", href: "#blocks" },
     NavItem { title: "Craft", href: "#projects" },
     NavItem { title: "Blog", href: "#blog" },
     NavItem { title: "Experience", href: "#experience" },
@@ -152,6 +153,8 @@ pub struct ComponentDoc {
     pub new: bool,
 }
 
+/// Not shown yet: the Components section is commented out in main.rs.
+#[allow(dead_code)]
 pub const COMPONENTS: &[ComponentDoc] = &[
     ComponentDoc { title: "Isometric Mark", new: true },
     ComponentDoc { title: "Oneko Cat", new: true },
@@ -170,6 +173,8 @@ pub struct Card {
     pub subtitle: &'static str,
 }
 
+/// Not shown yet: the Blocks section is commented out in main.rs.
+#[allow(dead_code)]
 pub const BLOCKS: &[Card] = &[
     Card { title: "Profile Header 01", subtitle: "Avatar, name and rotating taglines." },
     Card { title: "Overview 01", subtitle: "Job, location, local time and contacts." },

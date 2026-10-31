@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::data::{COMPONENTS, CREDITS, SITE_SUBTITLE, SITE_TITLE, SOCIAL_LINKS, SocialName, USER};
+use crate::data::{CREDITS, SITE_SUBTITLE, SITE_TITLE, SOCIAL_LINKS, SocialName, USER};
 use crate::mark::FlatMark;
 use crate::ui::SocialIcon;
 
@@ -21,6 +21,7 @@ fn Field(label: &'static str, #[props(default)] class: String, children: Element
 pub fn SiteFooterCad() -> Element {
     let sha = env!("BUILD_SHA");
     let date = env!("BUILD_DATE");
+    let version = env!("CARGO_PKG_VERSION");
     let github = SOCIAL_LINKS.iter().find(|l| l.name == SocialName::GitHub);
     let source = format!("https://github.com/{}", USER.source_repo);
 
@@ -53,7 +54,8 @@ pub fn SiteFooterCad() -> Element {
                         Field { label: "Date",
                             time { datetime: "{date}", "{date}" }
                         }
-                        Field { label: "Registry", "{COMPONENTS.len()} items" }
+                        // Was "Registry: N items" (the component count); back when Components returns.
+                        Field { label: "Version", "v{version}" }
                         Field { label: "Deployed on",
                             span { class: "font-sans", "aria-hidden": "true", "▲" }
                             span { class: "sr-only", "Vercel" }

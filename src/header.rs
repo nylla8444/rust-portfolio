@@ -135,8 +135,8 @@ fn commands() -> Vec<Command> {
     let mut out = vec![Command { group: "Pages", title: "Home".into(), href: "#".into(), external: false }];
     for (title, id) in [
         ("About", "hello"),
-        ("Components", "components"),
-        ("Blocks", "blocks"),
+        // ("Components", "components"),
+        // ("Blocks", "blocks"),
         ("Blog", "blog"),
         ("Stack", "stack"),
         ("Experience", "experience"),

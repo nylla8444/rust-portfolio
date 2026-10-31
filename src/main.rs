@@ -53,11 +53,12 @@ fn App() -> Element {
                         Testimonials {}
                         Separator {}
 
-                        Components {}
-                        Separator {}
+                        // Hidden until there's published work to list.
+                        // Components {}
+                        // Separator {}
 
-                        Blocks {}
-                        Separator {}
+                        // Blocks {}
+                        // Separator {}
 
                         Blog {}
                         Separator {}
