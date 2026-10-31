@@ -7,11 +7,14 @@ mod data;
 mod header;
 mod js;
 mod mark;
+mod profile;
 mod ui;
 
 use dioxus::prelude::*;
 
 use header::{CommandMenu, CommandMenuOpen, ScrollToTop, SiteBottomNav, SiteHeader};
+use profile::{FrameWidthDimension, ProfileHeader, SeparatorHeightDimension};
+use ui::Separator;
 
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
 
@@ -29,7 +32,13 @@ fn App() -> Element {
             SiteHeader {}
             main { class: "max-w-screen overflow-x-clip px-2",
                 div { class: "[--separator-height:--spacing(8)]",
-                    div { class: "mx-auto md:max-w-3xl",                    }
+                    div { class: "mx-auto md:max-w-3xl",
+                        FrameWidthDimension {}
+                        ProfileHeader {}
+                        Separator {
+                            SeparatorHeightDimension { height: 32, class: "hidden lg:block" }
+                        }
+                    }
                 }
             }
             div { class: "pointer-events-none fixed inset-x-0 bottom-0 z-40 lg:hidden", "aria-hidden": "true",
