@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{app_title}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Allyn Ralf Ledesma (nylla), Computer Science student at West Visayas State University. Portfolio built with Rust and Dioxus."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caveat&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:opsz@6..72&display=swap"
+    />
+    <link rel="preload" href="/fonts/PaperMono.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      // Apply the saved or system theme before first paint, so dark mode never flashes white.
+      (function () {
+        try {
+          var saved = localStorage.getItem("theme");
+          var dark = saved
+            ? saved === "dark"
+            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.classList.toggle("dark", dark);
+          document
+            .querySelector('meta[name="theme-color"]')
+            .setAttribute("content", dark ? "#09090b" : "#ffffff");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="main"></div>
+  </body>
+</html>

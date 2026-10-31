@@ -1,0 +1,305 @@
+/*
+ * Design tokens and utilities ported from chanhdai.com (MIT, © Chánh Đại).
+ * https://github.com/ncdai/chanhdai.com
+ */
+
+@import "tailwindcss";
+@source "./src";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+  font-family: "Paper Mono";
+  src: url("/fonts/PaperMono.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-accent: var(--accent);
+  --color-accent-muted: var(--accent-muted);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-line: var(--line);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-info: var(--info);
+  --color-success: var(--success);
+  --color-link: var(--link);
+  --color-dimension: var(--dimension);
+  --color-dimension-foreground: var(--dimension-foreground);
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+  --color-selection: var(--selection);
+  --color-selection-foreground: var(--selection-foreground);
+
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Paper Mono", "Geist Mono", ui-monospace, monospace;
+  --font-serif: "Newsreader", ui-serif, Georgia, serif;
+  --font-handwritten: "Caveat", cursive;
+  --font-heading: "Geist", ui-sans-serif, system-ui, sans-serif;
+
+  --font-mono--font-feature-settings: "ss01", "zero";
+
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-marquee-reverse: marquee var(--marquee-duration, 40s) linear
+    infinite reverse;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  --animate-text-swap: text-swap 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes text-swap {
+    from {
+      opacity: 0;
+      transform: translateY(60%);
+      filter: blur(2px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+}
+
+@utility link {
+  @apply decoration-1 underline-offset-3 hover:underline;
+}
+
+@utility link-underline {
+  @apply underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current;
+}
+
+@utility screen-line-top {
+  @apply relative;
+  &:before {
+    content: "";
+    @apply absolute top-0 left-[-100vw] -z-1 h-px w-[200vw] bg-line;
+  }
+}
+
+@utility screen-line-bottom {
+  @apply relative;
+  &:after {
+    content: "";
+    @apply absolute bottom-0 left-[-100vw] -z-1 h-px w-[200vw] bg-line;
+  }
+}
+
+@utility screen-line-top-none {
+  @apply before:content-none;
+}
+
+@utility screen-line-bottom-none {
+  @apply after:content-none;
+}
+
+@utility diagonal-stripes {
+  @apply [--pattern-foreground:var(--color-line)]/56;
+  @apply bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] bg-size-[10px_10px];
+}
+
+@utility stripe-divider {
+  @apply relative h-8;
+  &:before {
+    content: "";
+    @apply absolute left-[-100vw] -z-1 h-full w-[200vw] diagonal-stripes;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.141 0.005 285.823);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.141 0.005 285.823);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --card: oklch(1 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-muted: color-mix(in oklab, var(--accent) 50%, transparent);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --border: oklch(0.92 0.004 286.32);
+  --line: color-mix(in oklab, var(--border) 64%, var(--background));
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.705 0.015 286.067);
+  --info: oklch(0.623 0.214 259.815);
+  --success: oklch(0.723 0.219 149.579);
+  --link: oklch(0.488 0.243 264.376);
+  --dimension: color-mix(
+    in oklab,
+    oklch(70.5% 0.015 286.067) 60%,
+    var(--background)
+  );
+  --dimension-foreground: oklch(70.5% 0.015 286.067);
+  --surface: oklch(0.985 0 0);
+  --surface-foreground: oklch(0.141 0.005 285.823);
+  --selection: oklch(0.141 0.005 285.823);
+  --selection-foreground: oklch(0.985 0 0);
+
+  --header-height: --spacing(15);
+  --fade-bottom-height: --spacing(24);
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.141 0.005 285.823);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --card: oklch(0.21 0.006 285.885);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-muted: color-mix(in oklab, var(--accent) 20%, transparent);
+  --accent-foreground: oklch(0.985 0 0);
+  --border: oklch(0.274 0.006 286.033);
+  --input: lab(100% 0 0 / 0.15);
+  --ring: oklch(0.552 0.016 285.938);
+  --link: oklch(0.623 0.214 259.815);
+  --dimension: color-mix(
+    in oklab,
+    oklch(37% 0.013 285.805) 80%,
+    var(--background)
+  );
+  --dimension-foreground: oklch(37% 0.013 285.805);
+  --surface: oklch(0.21 0.006 285.885);
+  --surface-foreground: oklch(0.985 0 0);
+  --selection: oklch(0.985 0 0);
+  --selection-foreground: oklch(0.141 0.005 285.823);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    @apply border-border outline-ring/50;
+  }
+
+  ::selection {
+    @apply bg-selection text-selection-foreground;
+  }
+
+  html {
+    @apply overscroll-y-none;
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 5px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  [id] {
+    @apply scroll-mt-18;
+  }
+}
+
+/* A small slice of shadcn/typeset, enough for the short prose blocks. */
+@layer components {
+  .typeset {
+    font-size: calc(var(--typeset-size, 1em) * 1.125);
+    line-height: var(--typeset-leading, 1.75);
+    color: var(--color-foreground);
+    overflow-wrap: break-word;
+
+    @media (min-width: 48rem) {
+      font-size: var(--typeset-size, 1em);
+    }
+
+    & > :first-child {
+      margin-top: 0;
+    }
+
+    & p,
+    & ul {
+      margin-block-start: var(--typeset-flow, 1.25em);
+    }
+
+    & ul {
+      list-style: disc;
+      padding-inline-start: 1.25em;
+    }
+
+    & li + li {
+      margin-block-start: 0.5em;
+    }
+
+    & li::marker {
+      color: var(--color-muted-foreground);
+    }
+
+    & a {
+      @apply link-underline;
+    }
+
+    & strong {
+      font-weight: 500;
+    }
+  }
+
+  .typeset-description {
+    --typeset-size: 15px;
+    --typeset-leading: 1.6;
+    --typeset-flow: 1em;
+    font-size: var(--typeset-size);
+  }
+}
