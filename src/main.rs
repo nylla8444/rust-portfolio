@@ -4,6 +4,7 @@
 //! The cursor-chasing cat is a Rust port of oneko.js by adryd (MIT).
 
 mod data;
+mod footer;
 mod header;
 mod js;
 mod mark;
@@ -76,6 +77,7 @@ fn App() -> Element {
                     }
                 }
             }
+            footer::SiteFooterCad {}
             div { class: "pointer-events-none fixed inset-x-0 bottom-0 z-40 lg:hidden", "aria-hidden": "true",
                 div { class: "h-(--fade-bottom-height) bg-linear-to-b from-transparent to-background mask-linear-[to_top,var(--background)_25%,transparent] backdrop-blur-[1px]" }
             }
