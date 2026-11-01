@@ -121,8 +121,8 @@ pub enum StatValue {
     GitHubStars,
     /// All-time downloads across every crate you own on crates.io, fetched live.
     CratesDownloads,
-    /// Views of this site over the last 365 days, from the counter in `PAGE_VIEWS`.
-    PageViewsYear,
+    /// All-time views of this site, from the counter in `PAGE_VIEWS`.
+    PageViewsAllTime,
 }
 
 /// Your viewtally page-view counter (https://github.com/nylla8444/viewtally-rust):
@@ -144,7 +144,7 @@ pub const NUMBERS: &[Stat] = &[
     // The X API is paid, so update this by hand every few weeks.
     Stat { label: "X followers", value: StatValue::Fixed(0) },
     Stat { label: "crates.io downloads", value: StatValue::CratesDownloads },
-    Stat { label: "Page views / year", value: StatValue::PageViewsYear },
+    Stat { label: "Page views", value: StatValue::PageViewsAllTime },
 ];
 
 #[derive(PartialEq)]

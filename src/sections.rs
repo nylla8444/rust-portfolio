@@ -489,7 +489,7 @@ async fn fetch_stat(value: StatValue) -> Option<u64> {
         ),
         // Not cached like the others: viewtally has no rate limit to protect,
         // and a cached total could miss this visit or go backwards on reload.
-        StatValue::PageViewsYear => format!(
+        StatValue::PageViewsAllTime => format!(
             r#"
             // Read the total after this visit's hit lands, so it's included,
             // with a unique URL so neither the browser nor the Worker's cache answers.
@@ -499,7 +499,7 @@ async fn fetch_stat(value: StatValue) -> Option<u64> {
             return (await r.json()).views;
             "#,
             hit = page_view_hit_js(),
-            url = crate::js::js_str(&format!("{}/views?site={}&days=365", PAGE_VIEWS.endpoint, PAGE_VIEWS.site)),
+            url = crate::js::js_str(&format!("{}/views?site={}", PAGE_VIEWS.endpoint, PAGE_VIEWS.site)),
         ),
     };
     crate::js::eval::<Option<u64>>(&code).await.flatten()
