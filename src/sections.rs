@@ -1004,13 +1004,19 @@ fn ExperienceItem(experience: &'static Experience) -> Element {
                 }
                 div { class: "flex min-w-0 flex-1 flex-col gap-x-3 gap-y-1 pr-1 sm:flex-row sm:items-baseline sm:justify-between",
                     h3 { class: "text-xl/6 font-medium",
-                        a { class: "link", href: experience.website, target: "_blank", rel: "noopener", "{experience.company}" }
+                        if experience.website.is_empty() {
+                            "{experience.company}"
+                        } else {
+                            a { class: "link", href: experience.website, target: "_blank", rel: "noopener", "{experience.company}" }
+                        }
                     }
                     dl { class: "flex min-w-0 items-center gap-1.5 text-sm whitespace-nowrap text-muted-foreground",
                         dt { class: "sr-only", "Location" }
                         dd { class: "truncate", "{experience.location}" }
-                        dt { class: "sr-only", "Location type" }
-                        dd { "({experience.location_type})" }
+                        if !experience.location_type.is_empty() {
+                            dt { class: "sr-only", "Location type" }
+                            dd { "({experience.location_type})" }
+                        }
                         if experience.current {
                             dt { class: "sr-only", "Employment status" }
                             dd {
@@ -1165,14 +1171,16 @@ fn ProjectItem(project: &'static Project) -> Element {
                             }
                         }
                     }
-                    a {
-                        class: "relative flex size-6 shrink-0 items-center justify-center text-muted-foreground after:absolute after:-inset-2 hover:text-foreground [&_svg]:pointer-events-none [&_svg]:size-4",
-                        href: project.link,
-                        target: "_blank",
-                        rel: "noopener",
-                        "aria-label": "Open project",
-                        title: "Open project",
-                        lucide_dioxus::Link {}
+                    if !project.link.is_empty() {
+                        a {
+                            class: "relative flex size-6 shrink-0 items-center justify-center text-muted-foreground after:absolute after:-inset-2 hover:text-foreground [&_svg]:pointer-events-none [&_svg]:size-4",
+                            href: project.link,
+                            target: "_blank",
+                            rel: "noopener",
+                            "aria-label": "Open project",
+                            title: "Open project",
+                            lucide_dioxus::Link {}
+                        }
                     }
                     span { class: "shrink-0 text-muted-foreground [&_svg]:size-4",
                         if open() {
@@ -1295,9 +1303,13 @@ fn RecognitionItem(entry: &'static Recognition) -> Element {
                 IconTile { class: "mx-4", lucide_dioxus::CircleCheckBig {} }
                 div { class: "flex-1 space-y-1 border-l border-dashed border-line p-4",
                     h3 { class: "leading-snug font-medium text-balance",
-                        a { href: *url, target: "_blank", rel: "noopener",
-                            span { class: "absolute inset-0", "aria-hidden": "true" }
+                        if url.is_empty() {
                             "{title}"
+                        } else {
+                            a { href: *url, target: "_blank", rel: "noopener",
+                                span { class: "absolute inset-0", "aria-hidden": "true" }
+                                "{title}"
+                            }
                         }
                     }
                     dl { class: "flex flex-wrap items-center gap-x-2 text-sm text-muted-foreground",
@@ -1309,14 +1321,18 @@ fn RecognitionItem(entry: &'static Recognition) -> Element {
                                 span { class: "ml-0.5", "{issuer}" }
                             }
                         }
-                        MetaSeparator {}
-                        div {
-                            dt { class: "sr-only", "Issued on" }
-                            dd { "{date}" }
+                        if !date.is_empty() {
+                            MetaSeparator {}
+                            div {
+                                dt { class: "sr-only", "Issued on" }
+                                dd { "{date}" }
+                            }
                         }
                     }
                 }
-                span { class: "text-muted-foreground [&_svg]:size-4", lucide_dioxus::ArrowUpRight {} }
+                if !url.is_empty() {
+                    span { class: "text-muted-foreground [&_svg]:size-4", lucide_dioxus::ArrowUpRight {} }
+                }
             }
         },
     }
