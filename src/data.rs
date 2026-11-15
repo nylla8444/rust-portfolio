@@ -59,8 +59,8 @@ pub const USER: User = User {
     source_repo: "nylla8444/rust-portfolio",
 };
 
-/// Placeholder until you register a domain (e.g. the free .me from the GitHub Student Pack).
-pub const SITE_TITLE: &str = "nylla.me";
+/// Switch to your own domain once it's registered (e.g. the free .me from the GitHub Student Pack).
+pub const SITE_TITLE: &str = "nylla.vercel.app";
 pub const SITE_SUBTITLE: &str = "Personal portfolio, built with Rust and Dioxus";
 
 #[derive(PartialEq)]
