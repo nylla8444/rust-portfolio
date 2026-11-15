@@ -468,6 +468,16 @@ async fn fetch_stat(value: StatValue) -> Option<u64> {
                 "#
             ),
         ),
+        StatValue::GitHubFollowers => cached_stat_js(
+            "github-followers",
+            &format!(
+                r#"
+                const r = await fetch("https://api.github.com/users/{user}");
+                if (!r.ok) return null;
+                return (await r.json()).followers;
+                "#
+            ),
+        ),
         StatValue::CratesDownloads => cached_stat_js(
             "crates-downloads",
             &format!(

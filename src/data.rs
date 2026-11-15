@@ -123,9 +123,12 @@ pub struct Stat {
 #[derive(Clone, Copy, PartialEq)]
 pub enum StatValue {
     /// Typed in by hand.
+    #[allow(dead_code)]
     Fixed(u64),
     /// Stars across every public repo you own, forks excluded, fetched live.
     GitHubStars,
+    /// Your GitHub follower count, fetched live.
+    GitHubFollowers,
     /// All-time downloads across every crate you own on crates.io, fetched live.
     CratesDownloads,
     /// All-time views of this site, from the counter in `PAGE_VIEWS`.
@@ -148,8 +151,8 @@ pub const PAGE_VIEWS: PageViews = PageViews {
 
 pub const NUMBERS: &[Stat] = &[
     Stat { label: "GitHub stars", value: StatValue::GitHubStars },
-    // The X API is paid, so update this by hand every few weeks.
-    Stat { label: "X followers", value: StatValue::Fixed(0) },
+    // X followers would need X's paid API; use `StatValue::Fixed(n)` to type it in by hand.
+    Stat { label: "GitHub followers", value: StatValue::GitHubFollowers },
     Stat { label: "crates.io downloads", value: StatValue::CratesDownloads },
     Stat { label: "Page views", value: StatValue::PageViewsAllTime },
 ];
