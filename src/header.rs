@@ -137,7 +137,7 @@ fn commands() -> Vec<Command> {
         ("About", "hello"),
         // ("Components", "components"),
         // ("Blocks", "blocks"),
-        ("Blog", "blog"),
+        // ("Blog", "blog"),
         ("Stack", "stack"),
         ("Experience", "experience"),
         ("Education", "education"),
@@ -296,7 +296,7 @@ pub fn SiteBottomNav() -> Element {
             nav { class: "flex items-center",
                 a { class: "rounded-lg px-2 py-1.5 text-sm font-medium text-foreground", href: "#", "Home" }
                 a { class: "rounded-lg px-2 py-1.5 text-sm font-medium text-muted-foreground", href: "#projects", "Projects" }
-                a { class: "rounded-lg px-2 py-1.5 text-sm font-medium text-muted-foreground", href: "#blog", "Blog" }
+                a { class: "rounded-lg px-2 py-1.5 text-sm font-medium text-muted-foreground", href: "#experience", "Experience" }
             }
         }
     }

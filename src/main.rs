@@ -51,7 +51,8 @@ fn App() -> Element {
 
                         Hello {}
                         Numbers {}
-                        Testimonials {}
+                        // Hidden until TESTIMONIALS_1/2 in data.rs hold real quotes.
+                        // Testimonials {}
                         Separator {}
 
                         // Hidden until there's published work to list.
@@ -61,8 +62,8 @@ fn App() -> Element {
                         // Blocks {}
                         // Separator {}
 
-                        Blog {}
-                        Separator {}
+                        // Blog {}
+                        // Separator {}
 
                         TechStack {}
                         Separator {}

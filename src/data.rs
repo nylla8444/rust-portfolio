@@ -74,7 +74,8 @@ pub const MAIN_NAV: &[NavItem] = &[
     // NavItem { title: "Components", href: "#components" },
     // NavItem { title: "Blocks", href: "#blocks" },
     NavItem { title: "Craft", href: "#projects" },
-    NavItem { title: "Blog", href: "#blog" },
+    // Hidden along with the Blog section until there are posts.
+    // NavItem { title: "Blog", href: "#blog" },
     NavItem { title: "Experience", href: "#experience" },
 ];
 
@@ -168,6 +169,9 @@ pub struct Testimonial {
 
 const PLACEHOLDER_QUOTE: &str = "Placeholder testimonial. Replace it with a real quote from someone you've worked with.";
 
+// Not shown yet: the Testimonials section is commented out in main.rs until
+// these are real quotes.
+#[allow(dead_code)]
 pub const TESTIMONIALS_1: &[Testimonial] = &[
     Testimonial { quote: PLACEHOLDER_QUOTE, author_name: "Person One", author_tagline: "Role at Company", url: "#", featured: true },
     Testimonial { quote: "Short placeholder quote.", author_name: "Person Three", author_tagline: "Role at Company", url: "#", featured: false },
@@ -176,6 +180,7 @@ pub const TESTIMONIALS_1: &[Testimonial] = &[
     Testimonial { quote: PLACEHOLDER_QUOTE, author_name: "Person Six", author_tagline: "Role at Company", url: "#", featured: false },
 ];
 
+#[allow(dead_code)]
 pub const TESTIMONIALS_2: &[Testimonial] = &[
     Testimonial { quote: "Placeholder testimonial.", author_name: "Person Two", author_tagline: "Role at Company", url: "#", featured: true },
     Testimonial { quote: "Super clean placeholder.", author_name: "Person Seven", author_tagline: "Role at Company", url: "#", featured: false },
@@ -219,6 +224,8 @@ pub const BLOCKS: &[Card] = &[
     Card { title: "Footer 01", subtitle: "Footer laid out like a technical drawing." },
 ];
 
+/// Not shown yet: the Blog section is commented out in main.rs until these posts exist.
+#[allow(dead_code)]
 pub const POSTS: &[Card] = &[
     Card { title: "Shipping dioxus-vercel 0.1", subtitle: "30 Oct 2026" },
     Card { title: "Why I built my portfolio in Rust", subtitle: "1 Nov 2026" },

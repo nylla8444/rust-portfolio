@@ -405,7 +405,9 @@ pub fn Hello() -> Element {
 #[component]
 pub fn Numbers() -> Element {
     rsx! {
-        Panel { id: "numbers", class: "screen-line-bottom-none",
+        // Add `class: "screen-line-bottom-none"` back when Testimonials returns:
+        // its top line then closes this panel.
+        Panel { id: "numbers",
             div { class: "h-px" }
             div { class: "h-4" }
             div { class: "screen-line-bottom h-px" }
@@ -626,6 +628,7 @@ fn Marquee(items: Vec<&'static Testimonial>, reverse: bool) -> Element {
     }
 }
 
+#[allow(dead_code)] // Commented out in main.rs until there are real quotes.
 #[component]
 pub fn Testimonials() -> Element {
     let all: Vec<&'static Testimonial> = TESTIMONIALS_1.iter().chain(TESTIMONIALS_2.iter()).collect();
@@ -793,6 +796,7 @@ pub fn Blocks() -> Element {
     }
 }
 
+#[allow(dead_code)] // Commented out in main.rs until there are posts.
 #[component]
 pub fn Blog() -> Element {
     rsx! {
