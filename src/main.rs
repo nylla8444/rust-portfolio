@@ -20,7 +20,14 @@ use profile::{FrameWidthDimension, ProfileHeader, SeparatorHeightDimension};
 use sections::*;
 use ui::Separator;
 
-const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
+// `with_static_head` makes dx write the <link> into index.html's <head>, so the
+// browser loads the CSS before the app draws anything. Adding it at runtime
+// with `document::Stylesheet` showed the page unstyled for a moment.
+// Nothing reads this constant; dx finds the asset in the build output.
+const _: Asset = asset!(
+    "/assets/tailwind.css",
+    AssetOptions::css().with_static_head(true)
+);
 
 fn main() {
     dioxus::launch(App);
@@ -32,7 +39,6 @@ fn App() -> Element {
     use_hook(|| spawn(count_page_view()));
 
     rsx! {
-        document::Stylesheet { href: TAILWIND_CSS }
         div { class: "group/layout relative isolate",
             SiteHeader {}
             main { class: "max-w-screen overflow-x-clip px-2",
