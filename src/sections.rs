@@ -839,7 +839,7 @@ pub fn TechStack() -> Element {
                             for item in items.iter() {
                                 li { class: "flex",
                                     a {
-                                        class: "flex h-(--badge-height) items-center justify-center gap-1.25 rounded-full bg-zinc-50/80 px-2 font-mono text-xs text-foreground inset-ring-1 inset-ring-border dark:bg-zinc-900/80",
+                                        class: "flex h-(--badge-height) items-center justify-center gap-1.25 rounded-full bg-surface/80 px-2 font-mono text-xs text-foreground inset-ring-1 inset-ring-border",
                                         href: item.href,
                                         target: "_blank",
                                         rel: "noopener",
@@ -1000,7 +1000,7 @@ fn ExperienceItem(experience: &'static Experience) -> Element {
         div { id: "experience-{experience.id}", class: "group/experience screen-line-bottom scroll-mt-14 space-y-4 py-4",
             div { class: "flex items-start gap-3 sm:items-center",
                 div { class: "flex size-6 shrink-0 items-center justify-center select-none",
-                    span { class: "flex size-2 rounded-full bg-zinc-300 dark:bg-zinc-600" }
+                    span { class: "flex size-2 rounded-full bg-foreground/25" }
                 }
                 div { class: "flex min-w-0 flex-1 flex-col gap-x-3 gap-y-1 pr-1 sm:flex-row sm:items-baseline sm:justify-between",
                     h3 { class: "text-xl/6 font-medium",

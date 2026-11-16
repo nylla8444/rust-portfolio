@@ -4,15 +4,9 @@
 @layer theme {
   :root, :host {
     --color-blue-900: oklch(37.9% 0.146 265.522);
-    --color-zinc-50: oklch(98.5% 0 0);
-    --color-zinc-200: oklch(92% 0.004 286.32);
-    --color-zinc-300: oklch(87.1% 0.006 286.286);
-    --color-zinc-400: oklch(70.5% 0.015 286.067);
-    --color-zinc-500: oklch(55.2% 0.016 285.938);
-    --color-zinc-600: oklch(44.2% 0.017 285.786);
-    --color-zinc-700: oklch(37% 0.013 285.805);
-    --color-zinc-800: oklch(27.4% 0.006 286.033);
-    --color-zinc-900: oklch(21% 0.006 285.885);
+    --color-stone-400: oklch(70.9% 0.01 56.259);
+    --color-stone-600: oklch(44.4% 0.011 73.639);
+    --color-stone-700: oklch(37.4% 0.01 67.558);
     --color-black: #000;
     --color-white: #fff;
     --spacing: 0.25rem;
@@ -26,10 +20,13 @@
     --text-base: 1rem;
     --text-base--line-height: calc(1.5 / 1);
     --text-lg: 1.125rem;
+    --text-lg--line-height: calc(1.75 / 1.125);
     --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
     --text-3xl: 1.875rem;
     --text-3xl--line-height: calc(2.25 / 1.875);
     --text-4xl: 2.25rem;
+    --text-4xl--line-height: calc(2.5 / 2.25);
     --font-weight-medium: 500;
     --font-weight-semibold: 600;
     --tracking-tight: -0.025em;
@@ -973,6 +970,12 @@
   .bg-current {
     background-color: currentcolor;
   }
+  .bg-foreground\/25 {
+    background-color: var(--foreground);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--foreground) 25%, transparent);
+    }
+  }
   .bg-info {
     background-color: var(--info);
   }
@@ -994,20 +997,17 @@
   .bg-secondary {
     background-color: var(--secondary);
   }
-  .bg-transparent {
-    background-color: transparent;
+  .bg-surface {
+    background-color: var(--surface);
   }
-  .bg-zinc-50 {
-    background-color: var(--color-zinc-50);
-  }
-  .bg-zinc-50\/80 {
-    background-color: color-mix(in srgb, oklch(98.5% 0 0) 80%, transparent);
+  .bg-surface\/80 {
+    background-color: var(--surface);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-zinc-50) 80%, transparent);
+      background-color: color-mix(in oklab, var(--surface) 80%, transparent);
     }
   }
-  .bg-zinc-300 {
-    background-color: var(--color-zinc-300);
+  .bg-transparent {
+    background-color: transparent;
   }
   .bg-linear-to-b {
     --tw-gradient-position: to bottom;
@@ -1572,29 +1572,26 @@
   .\[--col-left-width\:--spacing\(48\)\] {
     --col-left-width: calc(var(--spacing) * 48);
   }
-  .\[--pattern\:color-mix\(in_oklab\,var\(--foreground\)_12\%\,var\(--background\)\)\] {
-    --pattern: var(--foreground);
-    @supports (color: color-mix(in lab, red, red)) {
-      --pattern: color-mix(in oklab,var(--foreground) 12%,var(--background));
-    }
+  .\[--pattern\:var\(--mark-pattern\)\] {
+    --pattern: var(--mark-pattern);
   }
   .\[--separator-height\:--spacing\(8\)\] {
     --separator-height: calc(var(--spacing) * 8);
   }
-  .\[--stroke\:color-mix\(in_oklab\,var\(--foreground\)_16\%\,var\(--background\)\)\] {
-    --stroke: var(--foreground);
-    @supports (color: color-mix(in lab, red, red)) {
-      --stroke: color-mix(in oklab,var(--foreground) 16%,var(--background));
-    }
+  .\[--stroke\:var\(--mark-stroke\)\] {
+    --stroke: var(--mark-stroke);
   }
-  .\[stop-color\:var\(--color-zinc-200\)\] {
-    stop-color: var(--color-zinc-200);
+  .\[stop-color\:var\(--border\)\] {
+    stop-color: var(--border);
   }
-  .\[stop-color\:var\(--color-zinc-400\)\] {
-    stop-color: var(--color-zinc-400);
+  .\[stop-color\:var\(--color-stone-400\)\] {
+    stop-color: var(--color-stone-400);
   }
-  .\[stop-color\:var\(--color-zinc-700\)\] {
-    stop-color: var(--color-zinc-700);
+  .\[stop-color\:var\(--color-stone-700\)\] {
+    stop-color: var(--color-stone-700);
+  }
+  .\[stop-color\:var\(--ring\)\] {
+    stop-color: var(--ring);
   }
   .group-last\/education-item\:flex {
     &:is(:where(.group\/education-item):last-child *) {
@@ -2183,24 +2180,6 @@
       }
     }
   }
-  .dark\:bg-zinc-600 {
-    &:where(.dark, .dark *) {
-      background-color: var(--color-zinc-600);
-    }
-  }
-  .dark\:bg-zinc-900 {
-    &:where(.dark, .dark *) {
-      background-color: var(--color-zinc-900);
-    }
-  }
-  .dark\:bg-zinc-900\/80 {
-    &:where(.dark, .dark *) {
-      background-color: color-mix(in srgb, oklch(21% 0.006 285.885) 80%, transparent);
-      @supports (color: color-mix(in lab, red, red)) {
-        background-color: color-mix(in oklab, var(--color-zinc-900) 80%, transparent);
-      }
-    }
-  }
   .dark\:text-foreground {
     &:where(.dark, .dark *) {
       color: var(--foreground);
@@ -2240,19 +2219,9 @@
       stop-color: #fff;
     }
   }
-  .dark\:\[stop-color\:var\(--color-zinc-500\)\] {
+  .dark\:\[stop-color\:var\(--color-stone-600\)\] {
     &:where(.dark, .dark *) {
-      stop-color: var(--color-zinc-500);
-    }
-  }
-  .dark\:\[stop-color\:var\(--color-zinc-600\)\] {
-    &:where(.dark, .dark *) {
-      stop-color: var(--color-zinc-600);
-    }
-  }
-  .dark\:\[stop-color\:var\(--color-zinc-800\)\] {
-    &:where(.dark, .dark *) {
-      stop-color: var(--color-zinc-800);
+      stop-color: var(--color-stone-600);
     }
   }
   .dark\:hover\:bg-input\/50 {
@@ -2366,84 +2335,102 @@
   font-display: swap;
 }
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.141 0.005 285.823);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.141 0.005 285.823);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --card: oklch(1 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --accent: oklch(0.967 0.001 286.375);
+  --background: oklch(0.962 0.017 85);
+  --foreground: oklch(0.25 0.018 55);
+  --primary: oklch(0.25 0.018 55);
+  --primary-foreground: oklch(0.962 0.017 85);
+  --secondary: oklch(0.93 0.021 82);
+  --secondary-foreground: oklch(0.25 0.018 55);
+  --muted: oklch(0.93 0.021 82);
+  --muted-foreground: oklch(0.5 0.025 65);
+  --card: oklch(0.975 0.013 85);
+  --popover: oklch(0.975 0.013 85);
+  --popover-foreground: oklch(0.25 0.018 55);
+  --accent: oklch(0.93 0.021 82);
   --accent-muted: var(--accent);
   @supports (color: color-mix(in lab, red, red)) {
     --accent-muted: color-mix(in oklab, var(--accent) 50%, transparent);
   }
-  --accent-foreground: oklch(0.21 0.006 285.885);
-  --border: oklch(0.92 0.004 286.32);
-  --line: var(--border);
+  --accent-foreground: oklch(0.25 0.018 55);
+  --border: oklch(0.82 0.026 78);
+  --line: var(--foreground);
   @supports (color: color-mix(in lab, red, red)) {
-    --line: color-mix(in oklab, var(--border) 64%, var(--background));
+    --line: color-mix(in oklab, var(--foreground) 24%, var(--background));
   }
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --info: oklch(0.623 0.214 259.815);
-  --success: oklch(0.723 0.219 149.579);
-  --link: oklch(0.488 0.243 264.376);
-  --dimension: oklch(70.5% 0.015 286.067);
+  --input: oklch(0.82 0.026 78);
+  --ring: oklch(0.68 0.03 70);
+  --info: oklch(0.55 0.15 255);
+  --success: oklch(0.62 0.15 150);
+  --link: oklch(0.46 0.15 262);
+  --dimension: var(--foreground);
   @supports (color: color-mix(in lab, red, red)) {
-    --dimension: color-mix(
-    in oklab,
-    oklch(70.5% 0.015 286.067) 60%,
-    var(--background)
-  );
+    --dimension: color-mix(in oklab, var(--foreground) 34%, var(--background));
   }
-  --dimension-foreground: oklch(70.5% 0.015 286.067);
-  --surface: oklch(0.985 0 0);
-  --surface-foreground: oklch(0.141 0.005 285.823);
-  --selection: oklch(0.141 0.005 285.823);
-  --selection-foreground: oklch(0.985 0 0);
+  --dimension-foreground: oklch(0.55 0.03 68);
+  --mark-stroke: var(--foreground);
+  @supports (color: color-mix(in lab, red, red)) {
+    --mark-stroke: color-mix(in oklab, var(--foreground) 45%, var(--background));
+  }
+  --mark-pattern: var(--foreground);
+  @supports (color: color-mix(in lab, red, red)) {
+    --mark-pattern: color-mix(in oklab, var(--foreground) 22%, var(--background));
+  }
+  --surface: oklch(0.945 0.019 83);
+  --surface-foreground: oklch(0.25 0.018 55);
+  --selection: oklch(0.9 0.14 98);
+  --selection-foreground: oklch(0.25 0.018 55);
+  --paper-tooth: oklch(0.38 0.035 60 / 0.4);
+  --paper-specks: oklch(0.25 0.018 55 / 0.26);
   --header-height: calc(var(--spacing) * 15);
   --fade-bottom-height: calc(var(--spacing) * 24);
 }
 .dark {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.141 0.005 285.823);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --card: oklch(0.21 0.006 285.885);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.985 0 0);
-  --accent: oklch(0.274 0.006 286.033);
+  --background: oklch(0.155 0.007 60);
+  --foreground: oklch(0.925 0.016 85);
+  --primary: oklch(0.925 0.016 85);
+  --primary-foreground: oklch(0.155 0.007 60);
+  --secondary: oklch(0.24 0.009 60);
+  --secondary-foreground: oklch(0.925 0.016 85);
+  --muted: oklch(0.24 0.009 60);
+  --muted-foreground: oklch(0.72 0.02 75);
+  --card: oklch(0.19 0.008 60);
+  --popover: oklch(0.19 0.008 60);
+  --popover-foreground: oklch(0.925 0.016 85);
+  --accent: oklch(0.24 0.009 60);
   --accent-muted: var(--accent);
   @supports (color: color-mix(in lab, red, red)) {
     --accent-muted: color-mix(in oklab, var(--accent) 20%, transparent);
   }
-  --accent-foreground: oklch(0.985 0 0);
-  --border: oklch(0.274 0.006 286.033);
-  --input: lab(100% 0 0 / 0.15);
-  --ring: oklch(0.552 0.016 285.938);
-  --link: oklch(0.623 0.214 259.815);
-  --dimension: oklch(37% 0.013 285.805);
+  --accent-foreground: oklch(0.925 0.016 85);
+  --border: oklch(0.29 0.01 60);
+  --line: var(--foreground);
   @supports (color: color-mix(in lab, red, red)) {
-    --dimension: color-mix(
-    in oklab,
-    oklch(37% 0.013 285.805) 80%,
-    var(--background)
-  );
+    --line: color-mix(in oklab, var(--foreground) 20%, var(--background));
   }
-  --dimension-foreground: oklch(37% 0.013 285.805);
-  --surface: oklch(0.21 0.006 285.885);
-  --surface-foreground: oklch(0.985 0 0);
-  --selection: oklch(0.985 0 0);
-  --selection-foreground: oklch(0.141 0.005 285.823);
+  --input: lab(100% 0 0 / 0.15);
+  --ring: oklch(0.55 0.02 70);
+  --info: oklch(0.7 0.12 250);
+  --success: oklch(0.72 0.15 150);
+  --link: oklch(0.72 0.12 255);
+  --dimension: var(--foreground);
+  @supports (color: color-mix(in lab, red, red)) {
+    --dimension: color-mix(in oklab, var(--foreground) 26%, var(--background));
+  }
+  --dimension-foreground: oklch(0.55 0.015 65);
+  --mark-stroke: var(--foreground);
+  @supports (color: color-mix(in lab, red, red)) {
+    --mark-stroke: color-mix(in oklab, var(--foreground) 42%, var(--background));
+  }
+  --mark-pattern: var(--foreground);
+  @supports (color: color-mix(in lab, red, red)) {
+    --mark-pattern: color-mix(in oklab, var(--foreground) 20%, var(--background));
+  }
+  --surface: oklch(0.19 0.008 60);
+  --surface-foreground: oklch(0.925 0.016 85);
+  --selection: oklch(0.85 0.13 95);
+  --selection-foreground: oklch(0.155 0.007 60);
+  --paper-tooth: oklch(0.925 0.016 85 / 0.08);
+  --paper-specks: oklch(0.925 0.016 85 / 0.12);
 }
 @layer base {
   *, ::after, ::before, ::backdrop, ::file-selector-button {
@@ -2472,6 +2459,28 @@
     -moz-osx-font-smoothing: grayscale;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
+  }
+  .paper-texture::before, .paper-texture::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 45;
+    pointer-events: none;
+    -webkit-mask-image: var(--texture);
+    mask-image: var(--texture);
+    -webkit-mask-size: var(--texture-size);
+    mask-size: var(--texture-size);
+  }
+  .paper-texture::before {
+    background-color: var(--paper-tooth);
+    --texture-size: 200px, 400px;
+    --texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.12' numOctaves='3' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='white' surfaceScale='1.2'%3E%3CfeDistantLight azimuth='225' elevation='70'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2 0 0 0 1.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.01' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.8 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  }
+  .paper-texture::after {
+    background-color: var(--paper-specks);
+    --texture-size: 220px;
+    --texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3.5 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
   }
   button {
     cursor: pointer;

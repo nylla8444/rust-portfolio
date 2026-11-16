@@ -109,7 +109,7 @@ pub fn IconTile(#[props(default)] class: String, children: Element) -> Element {
 #[component]
 pub fn Tag(#[props(default)] class: String, children: Element) -> Element {
     rsx! {
-        span { class: "inline-flex items-center rounded-full border bg-zinc-50 px-1.5 py-0.5 font-mono text-xs text-muted-foreground dark:bg-zinc-900 {class}",
+        span { class: "inline-flex items-center rounded-full border bg-surface px-1.5 py-0.5 font-mono text-xs text-muted-foreground {class}",
             {children}
         }
     }

@@ -11,7 +11,7 @@ pub struct CommandMenuOpen(pub Signal<bool>);
 #[component]
 pub fn SiteHeader() -> Element {
     rsx! {
-        header { class: "sticky top-0 z-50 h-(--header-height) max-w-screen overflow-x-clip bg-background px-2 pt-1",
+        header { class: "paper-texture sticky top-0 z-50 h-(--header-height) max-w-screen overflow-x-clip bg-background px-2 pt-1",
             div { class: "screen-line-top screen-line-bottom mx-auto flex h-full items-center gap-2 border-x border-x-line pr-2 pl-4 after:z-1 sm:gap-4 md:max-w-3xl",
                 a { href: "#", "aria-label": "Home",
                     FlatMark { text: USER.alias.to_string(), class: "h-6 shrink-0" }

@@ -154,9 +154,9 @@ fn PixelWordmark() -> Element {
                                 x2: "{x2}",
                                 y2: "0",
                                 "gradientUnits": "userSpaceOnUse",
-                                stop { class: "[stop-color:var(--color-zinc-200)] dark:[stop-color:var(--color-zinc-800)]" }
-                                stop { offset: "0.5", class: "[stop-color:var(--color-zinc-400)] dark:[stop-color:var(--color-zinc-500)]" }
-                                stop { offset: "1", class: "[stop-color:var(--color-zinc-200)] dark:[stop-color:var(--color-zinc-800)]" }
+                                stop { class: "[stop-color:var(--border)]" }
+                                stop { offset: "0.5", class: "[stop-color:var(--ring)]" }
+                                stop { offset: "1", class: "[stop-color:var(--border)]" }
                             }
                         }
                         g { fill: "url(#wordmark-light)", "shape-rendering": "crispEdges",

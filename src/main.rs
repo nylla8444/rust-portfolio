@@ -39,7 +39,7 @@ fn App() -> Element {
     use_hook(|| spawn(count_page_view()));
 
     rsx! {
-        div { class: "group/layout relative isolate",
+        div { class: "group/layout paper-texture relative isolate",
             SiteHeader {}
             main { class: "max-w-screen overflow-x-clip px-2",
                 div { class: "[--separator-height:--spacing(8)]",

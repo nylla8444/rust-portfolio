@@ -121,7 +121,7 @@ pub fn set_dark(dark: bool) {
         let _ = el.class_list().toggle_with_force("dark", dark);
     }
     if let Ok(Some(meta)) = document.query_selector("meta[name=\"theme-color\"]") {
-        let _ = meta.set_attribute("content", if dark { "#09090b" } else { "#ffffff" });
+        let _ = meta.set_attribute("content", if dark { "#0e0c09" } else { "#f8f2e6" });
     }
     if let Ok(Some(storage)) = window.local_storage() {
         let _ = storage.set_item("theme", if dark { "dark" } else { "light" });

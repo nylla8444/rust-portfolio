@@ -239,7 +239,7 @@ pub fn IsometricMark(text: String) -> Element {
 
     rsx! {
         svg {
-            class: "h-auto w-full touch-manipulation overflow-visible select-none [--pattern:color-mix(in_oklab,var(--foreground)_12%,var(--background))] [--stroke:color-mix(in_oklab,var(--foreground)_16%,var(--background))]",
+            class: "h-auto w-full touch-manipulation overflow-visible select-none [--pattern:var(--mark-pattern)] [--stroke:var(--mark-stroke)]",
             "viewBox": "{view_box}",
             fill: "none",
             xmlns: "http://www.w3.org/2000/svg",
@@ -328,9 +328,9 @@ fn MarkLight(width: f64, height: f64) -> Element {
             cy: "{cy}",
             r: "{r}",
             "gradientUnits": "userSpaceOnUse",
-            stop { class: "[stop-color:var(--color-zinc-700)] dark:[stop-color:#fff]" }
+            stop { class: "[stop-color:var(--color-stone-700)] dark:[stop-color:#fff]" }
             stop {
-                class: "[stop-color:var(--color-zinc-400)] dark:[stop-color:var(--color-zinc-600)]",
+                class: "[stop-color:var(--color-stone-400)] dark:[stop-color:var(--color-stone-600)]",
                 offset: "1",
                 "stop-opacity": "0",
             }

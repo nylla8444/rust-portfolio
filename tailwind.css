@@ -1,6 +1,8 @@
 /*
  * Design tokens and utilities ported from chanhdai.com (MIT, © Chánh Đại).
  * https://github.com/ncdai/chanhdai.com
+ *
+ * The paper and night palettes and the grain overlay are this site's own.
  */
 
 @import "tailwindcss";
@@ -133,72 +135,82 @@
   }
 }
 
+/* Paper: cream stock, brown-black ink, blue fountain-pen links. */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.141 0.005 285.823);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.141 0.005 285.823);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --card: oklch(1 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --accent: oklch(0.967 0.001 286.375);
+  --background: oklch(0.962 0.017 85);
+  --foreground: oklch(0.25 0.018 55);
+  --primary: oklch(0.25 0.018 55);
+  --primary-foreground: oklch(0.962 0.017 85);
+  --secondary: oklch(0.93 0.021 82);
+  --secondary-foreground: oklch(0.25 0.018 55);
+  --muted: oklch(0.93 0.021 82);
+  --muted-foreground: oklch(0.5 0.025 65);
+  --card: oklch(0.975 0.013 85);
+  --popover: oklch(0.975 0.013 85);
+  --popover-foreground: oklch(0.25 0.018 55);
+  --accent: oklch(0.93 0.021 82);
   --accent-muted: color-mix(in oklab, var(--accent) 50%, transparent);
-  --accent-foreground: oklch(0.21 0.006 285.885);
-  --border: oklch(0.92 0.004 286.32);
-  --line: color-mix(in oklab, var(--border) 64%, var(--background));
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --info: oklch(0.623 0.214 259.815);
-  --success: oklch(0.723 0.219 149.579);
-  --link: oklch(0.488 0.243 264.376);
-  --dimension: color-mix(
-    in oklab,
-    oklch(70.5% 0.015 286.067) 60%,
-    var(--background)
-  );
-  --dimension-foreground: oklch(70.5% 0.015 286.067);
-  --surface: oklch(0.985 0 0);
-  --surface-foreground: oklch(0.141 0.005 285.823);
-  --selection: oklch(0.141 0.005 285.823);
-  --selection-foreground: oklch(0.985 0 0);
+  --accent-foreground: oklch(0.25 0.018 55);
+  /* Borders, lines and the 3D mark are darker than plain paper needs, so they
+     still read through the texture. */
+  --border: oklch(0.82 0.026 78);
+  --line: color-mix(in oklab, var(--foreground) 24%, var(--background));
+  --input: oklch(0.82 0.026 78);
+  --ring: oklch(0.68 0.03 70);
+  --info: oklch(0.55 0.15 255);
+  --success: oklch(0.62 0.15 150);
+  --link: oklch(0.46 0.15 262);
+  --dimension: color-mix(in oklab, var(--foreground) 34%, var(--background));
+  --dimension-foreground: oklch(0.55 0.03 68);
+  --mark-stroke: color-mix(in oklab, var(--foreground) 45%, var(--background));
+  --mark-pattern: color-mix(in oklab, var(--foreground) 22%, var(--background));
+  --surface: oklch(0.945 0.019 83);
+  --surface-foreground: oklch(0.25 0.018 55);
+  /* Highlighter yellow. */
+  --selection: oklch(0.9 0.14 98);
+  --selection-foreground: oklch(0.25 0.018 55);
+  /* Paper texture strength; see .paper-texture. */
+  --paper-tooth: oklch(0.38 0.035 60 / 0.4);
+  --paper-specks: oklch(0.25 0.018 55 / 0.26);
 
   --header-height: --spacing(15);
   --fade-bottom-height: --spacing(24);
 }
 
+/* Night: the same paper read by lamplight, a warm near-black. It is kept
+   dark so lines and the 3D mark still stand out through the grain. */
 .dark {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.985 0 0);
-  --primary: oklch(0.985 0 0);
-  --primary-foreground: oklch(0.141 0.005 285.823);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --card: oklch(0.21 0.006 285.885);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.985 0 0);
-  --accent: oklch(0.274 0.006 286.033);
+  --background: oklch(0.155 0.007 60);
+  --foreground: oklch(0.925 0.016 85);
+  --primary: oklch(0.925 0.016 85);
+  --primary-foreground: oklch(0.155 0.007 60);
+  --secondary: oklch(0.24 0.009 60);
+  --secondary-foreground: oklch(0.925 0.016 85);
+  --muted: oklch(0.24 0.009 60);
+  --muted-foreground: oklch(0.72 0.02 75);
+  --card: oklch(0.19 0.008 60);
+  --popover: oklch(0.19 0.008 60);
+  --popover-foreground: oklch(0.925 0.016 85);
+  --accent: oklch(0.24 0.009 60);
   --accent-muted: color-mix(in oklab, var(--accent) 20%, transparent);
-  --accent-foreground: oklch(0.985 0 0);
-  --border: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.925 0.016 85);
+  --border: oklch(0.29 0.01 60);
+  --line: color-mix(in oklab, var(--foreground) 20%, var(--background));
   --input: lab(100% 0 0 / 0.15);
-  --ring: oklch(0.552 0.016 285.938);
-  --link: oklch(0.623 0.214 259.815);
-  --dimension: color-mix(
-    in oklab,
-    oklch(37% 0.013 285.805) 80%,
-    var(--background)
-  );
-  --dimension-foreground: oklch(37% 0.013 285.805);
-  --surface: oklch(0.21 0.006 285.885);
-  --surface-foreground: oklch(0.985 0 0);
-  --selection: oklch(0.985 0 0);
-  --selection-foreground: oklch(0.141 0.005 285.823);
+  --ring: oklch(0.55 0.02 70);
+  --info: oklch(0.7 0.12 250);
+  --success: oklch(0.72 0.15 150);
+  --link: oklch(0.72 0.12 255);
+  --dimension: color-mix(in oklab, var(--foreground) 26%, var(--background));
+  --dimension-foreground: oklch(0.55 0.015 65);
+  --mark-stroke: color-mix(in oklab, var(--foreground) 42%, var(--background));
+  --mark-pattern: color-mix(in oklab, var(--foreground) 20%, var(--background));
+  --surface: oklch(0.19 0.008 60);
+  --surface-foreground: oklch(0.925 0.016 85);
+  --selection: oklch(0.85 0.13 95);
+  --selection-foreground: oklch(0.155 0.007 60);
+  --paper-tooth: oklch(0.925 0.016 85 / 0.08);
+  --paper-specks: oklch(0.925 0.016 85 / 0.12);
 }
 
 @layer base {
@@ -227,6 +239,49 @@
     @apply bg-background font-sans text-foreground antialiased;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
+  }
+
+  /*
+   * Paper texture, in two layers. Each is SVG noise used as a mask over a
+   * flat theme colour, so it takes ink tones on paper and light tones at
+   * night. They ignore the pointer and cover the element's content, so
+   * cards and text sit "in" the paper.
+   *
+   * .paper-texture goes on the page wrapper, where it scrolls with the
+   * content (a fixed layer made the content slide under a still texture),
+   * and on the sticky header, which stays put and so needs its own copy.
+   * z-index 45 keeps the page's copy over the content and the mobile bottom
+   * fade (z-40) but under the header and floating UI (z-50 and up).
+   *
+   * ::before is the sheet itself: fine tooth (noise lit from the top left,
+   * keeping only the shadowed side of each bump) plus faint cloudy mottling.
+   * ::after is the specks pressed into the stock.
+   */
+  .paper-texture::before,
+  .paper-texture::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 45;
+    pointer-events: none;
+    -webkit-mask-image: var(--texture);
+    mask-image: var(--texture);
+    -webkit-mask-size: var(--texture-size);
+    mask-size: var(--texture-size);
+  }
+
+  .paper-texture::before {
+    background-color: var(--paper-tooth);
+    --texture-size: 200px, 400px;
+    --texture:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.12' numOctaves='3' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='white' surfaceScale='1.2'%3E%3CfeDistantLight azimuth='225' elevation='70'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2 0 0 0 1.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.01' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.8 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  }
+
+  .paper-texture::after {
+    background-color: var(--paper-specks);
+    --texture-size: 220px;
+    --texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3.5 -1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
   }
 
   button {
