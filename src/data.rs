@@ -37,8 +37,8 @@ pub const USER: User = User {
     jobs: &[
         Job {
             title: "Software Developer",
-            company: "Robo Code Technologies",
-            website: "https://robocodeclub.com",
+            company: "Robo Code Technologies Inc.",
+            website: "https://rcti.ph",
         },
         Job {
             title: "Computer Science Student",
@@ -52,7 +52,7 @@ pub const USER: User = User {
     phone: "+63 908 661 7484",
     about: &[
         "Hi, I'm Allyn, though most people online know me as nylla. I'm a fourth-year Computer Science student at West Visayas State University in Iloilo City, graduating in 2027.",
-        "I'm a part-time software developer at Robo Code Technologies, building a full-stack ERP for food and commissary businesses with Next.js and Directus.",
+        "I'm a part-time software developer at Robo Code Technologies Inc., building a full-stack ERP for food and commissary businesses with Next.js and Directus.",
         "For my thesis, ECHO, I built the machine-learning pipeline and GPU inference API that screen retinal photos for hypertension risk.",
         "Outside work I build Rust tools: dioxus-vercel deploys Dioxus web apps to Vercel, and viewtally is the privacy-friendly counter behind this site's page views.",
     ],
@@ -355,8 +355,8 @@ pub struct Position {
 pub const EXPERIENCES: &[Experience] = &[
     Experience {
         id: "robocode",
-        company: "Robo Code Technologies",
-        website: "https://robocodeclub.com",
+        company: "Robo Code Technologies Inc.",
+        website: "https://rcti.ph",
         location: "Philippines",
         location_type: "Remote",
         current: true,
