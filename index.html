@@ -8,7 +8,7 @@
       name="description"
       content="Allyn Ralf Ledesma (nylla), Computer Science student at West Visayas State University and part-time software developer at Robo Code Technologies Inc. Portfolio built with Rust and Dioxus."
     />
-    <meta name="theme-color" content="#f8f2e6" />
+    <meta name="theme-color" content="#0e0c09" />
     <meta name="author" content="Allyn Ralf Ledesma" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href="https://nylla.vercel.app/" />
@@ -29,16 +29,18 @@
     />
     <link rel="preload" href="/fonts/PaperMono.woff2" as="font" type="font/woff2" crossorigin />
     <script>
-      // Paper is the default look. Apply a saved "dark" choice before first
-      // paint, so night mode never flashes paper.
+      // Night (dark paper) is the default look. Apply a saved "light" choice
+      // before first paint, so paper never flashes in. If storage is blocked,
+      // stay on night.
       (function () {
+        var dark = true;
         try {
-          var dark = localStorage.getItem("theme") === "dark";
-          document.documentElement.classList.toggle("dark", dark);
-          document
-            .querySelector('meta[name="theme-color"]')
-            .setAttribute("content", dark ? "#0e0c09" : "#f8f2e6");
+          dark = localStorage.getItem("theme") !== "light";
         } catch (e) {}
+        document.documentElement.classList.toggle("dark", dark);
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute("content", dark ? "#0e0c09" : "#f8f2e6");
       })();
     </script>
   </head>
