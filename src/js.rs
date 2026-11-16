@@ -63,6 +63,67 @@ pub fn play_click() {
     );
 }
 
+/// A mechanical keyboard key, synthesised like `play_click`. `down` is the
+/// bottom-out clack (a filtered noise burst, a high switch tick and a low
+/// body thud); key-up is a shorter, lighter clack. Each press is pitched a
+/// little differently so repeated taps don't sound copy-pasted.
+pub fn play_key(down: bool) {
+    document::eval(&format!("const down = {down};\n{KEY_SOUND}"));
+}
+
+const KEY_SOUND: &str = r#"
+const Ctx = window.AudioContext || window.webkitAudioContext;
+if (!Ctx) return;
+window.__clickCtx = window.__clickCtx || new Ctx();
+const ctx = window.__clickCtx;
+if (ctx.state === "suspended") ctx.resume();
+if (!window.__keyNoise) {
+  const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.08), ctx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+  window.__keyNoise = buf;
+}
+const t = ctx.currentTime;
+const pitch = 0.94 + Math.random() * 0.12;
+
+const burst = (type, freq, q, level, decay) => {
+  const src = ctx.createBufferSource();
+  src.buffer = window.__keyNoise;
+  const band = ctx.createBiquadFilter();
+  band.type = type;
+  band.frequency.value = freq * pitch;
+  band.Q.value = q;
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(level, t);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + decay);
+  src.connect(band).connect(gain).connect(ctx.destination);
+  src.start(t);
+  src.stop(t + decay + 0.01);
+};
+
+const thud = (from, to, level, decay) => {
+  const osc = ctx.createOscillator();
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(from * pitch, t);
+  osc.frequency.exponentialRampToValueAtTime(to * pitch, t + decay);
+  const gain = ctx.createGain();
+  gain.gain.setValueAtTime(level, t);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + decay);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + decay + 0.01);
+};
+
+if (down) {
+  burst("bandpass", 2600, 1.1, 0.55, 0.035);
+  burst("highpass", 6500, 0.7, 0.22, 0.012);
+  thud(210, 110, 0.32, 0.07);
+} else {
+  burst("bandpass", 3600, 1.4, 0.25, 0.022);
+  thud(320, 220, 0.07, 0.03);
+}
+"#;
+
 /// Reads the name aloud with the Web Speech API.
 pub fn speak(text: &str) {
     document::eval(&format!(
