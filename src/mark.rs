@@ -245,7 +245,9 @@ pub fn IsometricMark(text: String) -> Element {
             xmlns: "http://www.w3.org/2000/svg",
             "aria-hidden": "true",
             // Pressing the mark sinks the letters like a key, so it sounds
-            // like one too: a clack on the way down, a lighter one on release.
+            // like one too: a key-down recording on the way down, a key-up one
+            // on release. Hovering fetches them so the first press isn't late.
+            onpointerenter: move |_| crate::js::prime_key_sound(),
             onpointerdown: move |_| {
                 pressed.set(true);
                 crate::js::play_key(true);

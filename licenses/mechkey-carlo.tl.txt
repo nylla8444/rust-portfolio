@@ -1,0 +1,8 @@
+assets/sounds/mechkey-down.wav
+assets/sounds/mechkey-up.wav
+
+Mechanical key recordings from Carlo Taleon's portfolio, https://carlo.tl
+Source: https://github.com/Blankeos/gh-cdn (audio/mechkey-down.wav, audio/mechkey-up.wav)
+
+The source repository publishes no license. These files are used with credit
+to Carlo Taleon and will be removed or replaced if he asks.

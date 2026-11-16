@@ -781,5 +781,6 @@ pub const CREDITS: &[(&str, &str)] = &[
     ("Design: chanhdai.com by Chánh Đại", "https://github.com/ncdai/chanhdai.com"),
     ("Cat idea: ramx.in by Ramkrishna Swarnkar", "https://ramx.in"),
     ("Cat sprite & logic: oneko.js by adryd", "https://github.com/adryd325/oneko.js"),
+    ("Key sound: carlo.tl by Carlo Taleon", "https://carlo.tl"),
     ("Mono font: Paper Mono", "https://github.com/paper-design/paper-mono"),
 ];
