@@ -92,15 +92,35 @@ pub fn ProfileHeader() -> Element {
     }
 }
 
-/// Placeholder avatar. Swap it for an `img` of your photo or illustration.
+// The hand-drawn cat from the GitHub avatar, split into its pen lines and its
+// hearts. Each layer is a white image whose alpha is the drawing, used as a
+// mask over a theme colour: the lines take the text colour (ink on paper,
+// light at night) and the hearts stay green.
+//
+// Light lines on a dark background look heavier than the same lines in ink on
+// paper, so night mode uses a copy whose thick outlines are thinned to about
+// half; whiskers, stripes and the face stay as drawn.
+const AVATAR_INK: Asset = asset!("/assets/avatar/ink.png");
+const AVATAR_INK_NIGHT: Asset = asset!("/assets/avatar/ink-night.png");
+const AVATAR_HEARTS: Asset = asset!("/assets/avatar/hearts.png");
+
 #[component]
 fn Avatar() -> Element {
+    // Scaled past the circle a little so the cat fills it; the outer hearts
+    // tuck against the edge.
+    let layer = |src: Asset| {
+        format!(
+            "-webkit-mask: url({src}) 50% 42% / 112% no-repeat; mask: url({src}) 50% 42% / 112% no-repeat;"
+        )
+    };
     rsx! {
-        div { class: "flex size-full items-center justify-center overflow-hidden rounded-[inherit] bg-muted text-muted-foreground/60 select-none",
-            svg { class: "size-full translate-y-[12%]", "viewBox": "0 0 160 160", fill: "none", "aria-label": "Avatar placeholder",
-                circle { cx: "80", cy: "58", r: "28", stroke: "currentColor", stroke_width: "2", class: "fill-background" }
-                path { d: "M24 160c4-34 28-52 56-52s52 18 56 52", stroke: "currentColor", stroke_width: "2", class: "fill-background" }
-            }
+        div {
+            class: "relative size-full overflow-hidden rounded-[inherit] bg-background select-none",
+            role: "img",
+            "aria-label": "A hand-drawn cat waving, with green hearts",
+            div { class: "absolute inset-0 bg-avatar-heart", style: layer(AVATAR_HEARTS) }
+            div { class: "absolute inset-0 bg-foreground dark:hidden", style: layer(AVATAR_INK) }
+            div { class: "absolute inset-0 hidden bg-foreground dark:block", style: layer(AVATAR_INK_NIGHT) }
         }
     }
 }

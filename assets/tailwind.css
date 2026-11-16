@@ -687,10 +687,6 @@
     --tw-translate-y: calc(var(--spacing) * 2);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
-  .translate-y-\[12\%\] {
-    --tw-translate-y: 12%;
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
   .translate-y-\[37\.5\%\] {
     --tw-translate-y: 37.5%;
     translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -952,6 +948,9 @@
   .bg-accent {
     background-color: var(--accent);
   }
+  .bg-avatar-heart {
+    background-color: var(--avatar-heart);
+  }
   .bg-background {
     background-color: var(--background);
   }
@@ -966,6 +965,9 @@
   }
   .bg-current {
     background-color: currentcolor;
+  }
+  .bg-foreground {
+    background-color: var(--foreground);
   }
   .bg-foreground\/25 {
     background-color: var(--foreground);
@@ -1348,12 +1350,6 @@
   }
   .text-muted-foreground {
     color: var(--muted-foreground);
-  }
-  .text-muted-foreground\/60 {
-    color: var(--muted-foreground);
-    @supports (color: color-mix(in lab, red, red)) {
-      color: color-mix(in oklab, var(--muted-foreground) 60%, transparent);
-    }
   }
   .text-muted-foreground\/80 {
     color: var(--muted-foreground);
@@ -2164,6 +2160,16 @@
       display: flex;
     }
   }
+  .dark\:block {
+    &:where(.dark, .dark *) {
+      display: block;
+    }
+  }
+  .dark\:hidden {
+    &:where(.dark, .dark *) {
+      display: none;
+    }
+  }
   .dark\:border-input {
     &:where(.dark, .dark *) {
       border-color: var(--input);
@@ -2376,6 +2382,7 @@
   --surface-foreground: oklch(0.25 0.018 55);
   --selection: oklch(0.9 0.14 98);
   --selection-foreground: oklch(0.25 0.018 55);
+  --avatar-heart: oklch(0.52 0.14 145);
   --paper-tooth: oklch(0.38 0.035 60 / 0.4);
   --paper-specks: oklch(0.25 0.018 55 / 0.26);
   --header-height: calc(var(--spacing) * 15);
@@ -2426,6 +2433,7 @@
   --surface-foreground: oklch(0.925 0.016 85);
   --selection: oklch(0.85 0.13 95);
   --selection-foreground: oklch(0.155 0.007 60);
+  --avatar-heart: oklch(0.72 0.15 145);
   --paper-tooth: oklch(0.925 0.016 85 / 0.08);
   --paper-specks: oklch(0.925 0.016 85 / 0.12);
 }
